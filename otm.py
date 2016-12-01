@@ -1,4 +1,4 @@
-from pulp import LpVariable, LpMinimize, LpMaximize, LpProblem, LpStatus, value, lpSum
+from pulp import LpVariable, LpMinimize, LpMaximize, LpProblem, LpStatus, value, lpSum, GLPK
 
 def parseRequestBody(bodyString):
 
@@ -30,7 +30,7 @@ def parseRequestBody(bodyString):
 			problem += lpSum([problem_vars[i] * coefficients[i] for i in range(0, len(coefficients))]) >= bound
 
 
-	status = problem.solve()
+	status = problem.solve(GLPK())
 
 	response = {
 		'status': LpStatus[status].upper(),
